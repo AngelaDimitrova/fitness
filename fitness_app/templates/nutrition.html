@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../font-awesome-4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+    <style>
+        .container{
+            margin-right: 10%;
+            max-width: 80%;
+            margin-left: 10%;
+        }
+        .card-link{
+            font-weight: normal !important;
+        }
+        .proba{
+            background-color: lightgray !important;
+        }
+        a {
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #d1aa68;
+        }
+
+        #activeByDefault {
+            color: #009bd6;
+        }
+
+        a:focus-visible {
+            outline: none !important;
+            color: #009bd6;
+        }
+        a:active, a:hover, a:focus {
+            color: #009bd6;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .border-none {
+            border: 0;
+        }
+
+        .text-primary {
+            color: darkgray !important;
+        }
+
+        .text-secondary {
+            color: #9cdedb !important;
+        }
+    </style>
+</head>
+<body>
+<div class="sticky-top">
+    <nav class="navbar navbar-expand-lg shadow-sm bg-white mb-4">
+        <div class="container">
+            <a class="navbar-brand pe-0 pe-md-1 pe-xl-0 me-0 me-md-5" href="{% url 'nutrition' %}">
+                {% load static %}
+                <img src="{% static 'fitness-guide_logo.png' %}" alt="Logo" class="img-fluid pe-sm-5 pe-md-0" width="294">
+            </a>
+            <button class="proba navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon text-primary">
+                    <i class="fa fa-arrow-down"></i>
+                </span>
+            </button>
+            <div class="collapse navbar-collapse d-lg-flex align-items-center justify-content-end"
+                 id="navbarSupportedContent">
+                <ul class="mb-0 d-flex flex-column align-items-center justify-content-center flex-md-row justify-content-end">
+                    <li>
+                        <a class="me-4 fs-4" id='activeByDefault' href="{% url 'nutrition' %}">Исхрана</a>
+                    </li>
+                    <li>
+                        <a class="me-4 fs-4" href="{% url 'muscleGroups' %}">Вежби</a>
+                    </li>
+                    <li>
+                        <a class="me-4 fs-4" href="{% url 'quizzes' %}">Квизови</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="container">
+    <div class="row">
+        {% for recipe in recipes %}
+        <div class="col col-12 col-md-6 col-lg-4">
+            <a class="card-link" href="{% url 'nutrition_details' recipe.id %}">
+                <div class="card rounded border-none shadow mb-5 bg-body mb-3">
+                    <div class="ratio ratio-1x1 mb-2">
+                        <img alt="recipe image" class="img-fluid w-100 rounded-top" src="{{ MEDIA_URL}}{{ recipe.image.url }}">
+                    </div>
+                    <div class="text-center text-primary fs-4 mb-2">
+                        {{ recipe.name }}
+                    </div>
+                    <div class="text-secondary text-end fw-bold fs-5 mb-2 me-2">
+                        {{ recipe.time }}
+                        <i class="fa fa-clock-o text-secondary" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+    <style>
+        .container{
+            margin-right: 10%;
+            max-width: 80%;
+            margin-left: 10%;
+        }
+
+        .proba{
+            background-color: lightgray !important;
+        }
+        a {
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #d1aa68;
+        }
+
+        #activeByDefault {
+            color: #009bd6;
+        }
+
+        a:focus-visible {
+            outline: none !important;
+            color: #009bd6;
+        }
+        a:active, a:hover, a:focus {
+            color: #009bd6;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .border-none {
+            border: 0;
+        }
+
+        .text-primary {
+            color: darkgray !important;
+        }
+
+        .bg-offWhite {
+            background-color: #FAF9F6;
+        }
+
+        .bg-low{
+            background-color: #dbf3f3;
+        }
+
+        .border-radius{
+            border-radius: 10px;
+        }
+
+        .bg-medium {
+            background-color: #e5c9f1;
+        }
+
+        .bg-advence {
+            background-color: #eba3c0;
+        }
+    </style>
+    <script>
+        function calculateScore(theAnswers, level, testId){
+            let score = 0;
+            let answers = [theAnswers.substring(1, theAnswers.length - 1).split(", ", 10)];
+
+            let allInputs = document.getElementsByTagName('input');
+            for(let i = 0; i < allInputs.length; i++) {
+                if (allInputs[i].checked) {
+                    let answer = allInputs[i].value;
+                    let trueAnswer = answers[0].pop().substring(9).slice(0, -1);
+                    console.log(answer);
+                    console.log(trueAnswer);
+                    if(answer === trueAnswer){
+                        score+=1;
+                    }
+                }
+            }
+            console.log(score)
+
+            const data = {
+                testScore : score.toString(),
+                testLevel: level.toString(),
+                test: testId.toString(),
+            };
+            let csrftoken = getCookie('csrftoken');
+
+            fetch('/requestt/', {
+              method: 'POST', // or 'PUT'
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
+              },
+              body: JSON.stringify(data),
+              credentials: 'same-origin',
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                console.log('Success:', data);
+              })
+              .catch((error) => {
+                console.error('Error:', error);
+              });
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                let cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    let cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+</head>
+{% if level == "low" %}
+    <body class="bg-low">
+    {% elif level == "medium" %}
+    <body class="bg-medium">
+{% else %}
+    <body class="bg-advence">
+{% endif %}
+<div class="sticky-top">
+    <nav class="navbar navbar-expand-lg shadow-sm bg-white mb-4">
+        <div class="container">
+            <a class="navbar-brand pe-0 pe-md-1 pe-xl-0 me-0 me-md-5" href="{% url 'nutrition' %}">
+                {% load static %}
+                <img src="{% static 'fitness-guide_logo.png' %}" alt="Logo" class="img-fluid pe-sm-5 pe-md-0" width="294">
+            </a>
+            <button class="proba navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon text-primary">
+                    <i class="fa fa-arrow-down"></i>
+                </span>
+            </button>
+            <div class="collapse navbar-collapse d-lg-flex align-items-center justify-content-end"
+                 id="navbarSupportedContent">
+                <ul class="mb-0 d-flex flex-column align-items-center justify-content-center flex-md-row justify-content-end">
+                    <li>
+                        <a class="me-4 fs-4" href="{% url 'nutrition' %}">Исхрана</a>
+                    </li>
+                    <li>
+                        <a class="me-4 fs-4" href="{% url 'muscleGroups' %}">Вежби</a>
+                    </li>
+                    <li>
+                        <a class="me-4 fs-4" id="activeByDefault" href="{% url 'quizzes' %}">Квизови</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="container">
+        {% for question in questions %}
+        <div>
+            <div class="col col-12 col-lg-8 offset-lg-2 bg-offWhite border-radius p-3 mb-3">
+                <div class="mb-2">
+                    {{ question.content }}
+                </div>
+                {% for answer in answers.pop %}
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="{{ answer.pk }}" name="{{ question.content }}" value={{ answer.content }}>
+                    <label class="form-check-label" for="{{ answer.pk }}">
+                        {{ answer.content }}
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <button type="submit" onclick="calculateScore('{{ theAnswers }}', '{{ level }}', '{{ testId }}')" class="btn btn-outline-primary">Submit your answers</button>
+    </form>
+</div>
+
+</body>
+</html>
