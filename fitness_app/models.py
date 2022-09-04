@@ -48,7 +48,7 @@ class FitnessUser(models.Model):
 
 class Recipe(models.Model):
     image = models.ImageField()
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=30)
     time = models.CharField(max_length=10)
     description = models.TextField()
 
@@ -57,8 +57,8 @@ class Recipe(models.Model):
 
 
 class Fact(models.Model):
-    name = models.CharField(max_length=20)
-    description = models.CharField(max_length=100)
+    name = models.CharField(max_length=40)
+    description = models.CharField(max_length=300)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
 
     def __str__(self):

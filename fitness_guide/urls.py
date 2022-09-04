@@ -29,6 +29,6 @@ urlpatterns = [
     path('muscleGroups/', muscle_groups, name='muscleGroups'),
     path('muscleGroupDeatils/<id_muscle_group>/', muscle_group_details, name='muscle_group_details'),
     path('muscleGroups/<id_exercise>/', exercise, name='exercise'),
-    path('quizzes', quizzes, name='quizzes'),
+    path('quizzes/', quizzes, name='quizzes'),
     path('quizzes/<id_quiz>/', quiz, name='quiz'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

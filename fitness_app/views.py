@@ -77,14 +77,14 @@ def your_score(request, the_score):
 
 @csrf_protect
 def requestt(request):
-    scoree= ""
+    score = ""
     if request.method == "POST":
         a = str(request.body).split('"')
-        scoree = a[3]
+        score = a[3]
         level = a[7]
         testId = a[11]
-        testUser = TestUser(score=scoree, level=level)
+        testUser = TestUser(score=score, level=level)
         testUser.fitnessUser = request.user
         testUser.test = Test.objects.get(pk=testId)
         testUser.save()
-    return render(request, "yourScore.html", context={'score': '2'})
+    return render(request, "yourScore.html", context={'score': score})
