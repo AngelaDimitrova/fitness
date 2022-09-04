@@ -75,7 +75,7 @@ class MuscleGroup(models.Model):
 
 
 class Exercise(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=30)
     shortDescription = models.CharField(max_length=250)
     description = models.TextField()
     primaryImage = models.ImageField()
