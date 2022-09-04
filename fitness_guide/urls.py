@@ -20,7 +20,8 @@ from django.conf import settings
 from fitness_app.views import *
 
 urlpatterns = [
-    # path("", index),
+    path("login/", login_request, name="login_request"),
+    path("logout", logout_request, name="logout_request"),
     path("yourScore/<the_score>/", your_score, name="your_score"),
     path("requestt/", requestt, name='requestt'),
     path('admin/', admin.site.urls),
