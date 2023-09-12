@@ -29,5 +29,4 @@ jobs:
         run: ls -R
 
       - name: Start containers with Docker Compose
-        run: docker-compose up -d
-        working-directory: docker-compose -f /../docker-compose.yml up -d
+        run: docker-compose -f ${{ github.workspace }}/docker-compose.yml up -d
