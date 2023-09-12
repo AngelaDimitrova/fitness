@@ -26,7 +26,7 @@ jobs:
         run: docker push add5/fitness:latest
 
       - name: List directory contents
-        run: ls -R
+        run: cat docker-compose.yml
 
       - name: Start containers with Docker Compose
         run: docker-compose -f ${{ github.workspace }}/docker-compose.yml up -d
