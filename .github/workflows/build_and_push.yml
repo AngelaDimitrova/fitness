@@ -24,3 +24,7 @@ jobs:
 
       - name: Push Docker image to Docker Hub
         run: docker push add5/fitness:latest
+
+      - name: Start containers with Docker Compose
+        run: docker-compose up -d
+        working-directory: /docker-compose.yml
