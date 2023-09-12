@@ -1,4 +1,4 @@
 # fitness
 README dor fitness guide
 
-updaing the readme
+updaing the readme...
