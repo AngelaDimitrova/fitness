@@ -1,0 +1,25 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:latest
+    container_name: "database-container"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Angela$123
+      - POSTGRES_DB=postgres
+    ports:
+      - 5433:5432
+
+  django:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: sh -c "python manage.py migrate --no-input && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Angela$123

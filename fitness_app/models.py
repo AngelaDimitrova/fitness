@@ -30,7 +30,7 @@ class TestUser(models.Model):
 
 class Question(models.Model):
     content = models.TextField()
-    possibleAnswers = models.ManyToManyField(Answer,  related_name='possible_answers', blank=True, null=True)
+    possibleAnswers = models.ManyToManyField(Answer,  related_name='possible_answers', blank=True)
     theAnswer = models.OneToOneField(Answer, on_delete=models.CASCADE, primary_key=True,  related_name='the_answer')
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
 
