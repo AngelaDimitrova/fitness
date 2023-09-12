@@ -29,8 +29,5 @@ jobs:
         run: cat docker-compose.yml
 
       - name: Start containers with Docker Compose
-        run: docker-compose -f ${{ github.workspace }}/docker-compose.yml up -d
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: Angela$123
-          POSTGRES_DB: postgres
+        run: docker-compose -f ${{ github.workspace }}/docker-compose.yml up -d --env-file .env
+
