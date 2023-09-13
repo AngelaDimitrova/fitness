@@ -29,4 +29,4 @@ jobs:
         run: docker-compose -f ${{ github.workspace }}/docker-compose.yml up -d --env-file .env
 
       - name: Check Docker container status
-        run: docker-compose -f ${{ github.workspace }}/docker-compose.yml ps --env-file .env
+        run: docker-compose -f ${{ github.workspace }}/docker-compose.yml ps
