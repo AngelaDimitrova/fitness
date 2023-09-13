@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: fitness-guide-statefulset
+spec:
+  replicas: 0
+  serviceName: fitness-guide-service
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+        - name: my-container
+          image: add5/fitness:latest
+          ports:
+            - containerPort: 80
+
