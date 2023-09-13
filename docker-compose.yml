@@ -9,6 +9,8 @@ services:
       POSTGRES_DB: postgres
     ports:
       - 5433:5432
+    networks:
+      - mynetwork
 
   django:
     build:
@@ -23,4 +25,8 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: Angela$123
       POSTGRES_DB: postgres
+    networks:
+      - mynetwork
     
+networks:
+  mynetwork:
